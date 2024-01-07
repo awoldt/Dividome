@@ -42,16 +42,17 @@
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"
-                    style="font-family: Noto Sans; font-weight: bold">DiviDome</a>
-            </div>
+    <header style="display: flex; align-items: center">
+        <nav class="navbar" id="nav-left">
+            <a class="logo" asp-area="" asp-controller="Home" asp-action="Index"
+                style="font-family: inter; font-weight: 900 !important; color: #3a2f2f !important; margin-left: 1rem !important; margin-right: 1rem !important">DiviDome</a>
         </nav>
+        <nav class="navbar" id="nav-right">
+            <input class="search" type="text" placeholder="Ticker">
+            </input </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="container-fluid" id="content">
+        <main role="main" style="margin-bottom: 10rem;">
             @RenderBody()
         </main>
     </div>
