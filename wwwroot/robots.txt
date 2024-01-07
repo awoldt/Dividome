@@ -1,0 +1,11 @@
+User-agent: AhrefsBot 
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-Agent: panscient.com
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /

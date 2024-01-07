@@ -1,0 +1,231 @@
+@model CompanyPage
+
+@{
+    var headerTag = CompanyPage.GenerateCompanyProfilePageHeaderTags(Model.Name, Model.Symbol,
+    Model.HasDividends, Model.UpcomingDividends != null ? Model.UpcomingDividends.Length : 0);
+
+    ViewBag.title = headerTag.Title;
+    ViewBag.description = headerTag.Description;
+    ViewBag.canonical = headerTag.CanonicalTag;
+    ViewBag.ogTags = headerTag.OgMetaTags;
+    ViewBag.twitterOgTags = headerTag.TwitterOgMetaTags;
+}
+
+
+@if (Model.UpcomingDividends != null)
+{
+    // if there is an upcoming dividend, show banner at top of page
+    DivData nextDividend = Model.UpcomingDividends[0];
+    DateTime d = DateTime.Parse(Model.UpcomingDividends[0].PaymentDate);
+    foreach (var x in Model.UpcomingDividends)
+    {
+        if (DateTime.Parse(x.PaymentDate) < d)
+        {
+            nextDividend = x;
+        }
+    }
+    TimeSpan nextDividendInDays = DateTime.Parse(nextDividend.PaymentDate) - DateTime.Now;
+    <div class="alert alert-info mb-4">
+        <i class="bi bi-info-square-fill"></i>
+        <p class="m-0" style="display: inline;"> <b>
+                The next dividend from @Model.Name is scheduled for @Model.CleanDate(nextDividend.PaymentDate) with a
+                payout of $@nextDividend.Dividend
+                per share, occurring in @Math.Floor(nextDividendInDays.TotalDays) days</b></p>
+    </div>
+}
+
+
+@if (Model.UpcomingDividends == null && Model.HasDividends)
+{
+    // if company does not have any upcoming dividends, show banner at top of page
+    <div class="alert alert-info mb-4">
+        <p class="mb-0">Currently, @Model.Name does not have any upcoming dividends.<br>Please revisit at a later time to
+            check
+            for
+            any newly announced dividend payments.</p>
+    </div>
+
+}
+
+<div itemscope itemtype="https://schema.org/Corporation">
+    <div class="mb-4 header-company-info-div">
+        @if (Model.CompanyLogo != null)
+        {
+            <img src="@Model.CompanyLogo" alt="@Model.Name logo" class="img-fliud company-logo-img" itemprop="logo" />
+        }
+        <div style="display: inline-block;">
+            <h1 style="display: inline;" itemprop="name">@Model.Name</h1>
+            <div>
+                <span class="text-muted"><span itemprop="tickerSymbol">@Model.Symbol</span> &#183;
+                    @Model.Exchange</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    @if (Model.HasDividends)
+    {
+        // UPCOMING DIVIDENDS
+        @if (Model.UpcomingDividends != null)
+        {
+            <b class="mt-4" style="display: block;">Upcoming dividends (@Model.UpcomingDividends.Length)</b>
+
+            <table class="table table-striped mb-5">
+                <thead>
+                    <tr>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Payment Date</th>
+                        <th scope="col">Declaration Date</th>
+                        <th scope="col">Record Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @if (Model.UpcomingDividends.Length > 1)
+                    {
+                        // if there are more than 1 upcoming dividends, highlight the next payment table row
+                        for (int i = 0; i < Model.UpcomingDividends.Length; i++)
+                        {
+                            if (i == Model.UpcomingDividends.Length - 1)
+                            {
+                                <tr style="border: 3px solid black">
+                                    <th class="upcoming-dividend-tr" scope="row">$@Model.UpcomingDividends[i].Dividend</th>
+                                    <td class="upcoming-dividend-tr">@Model.CleanDate(Model.UpcomingDividends[i].PaymentDate)</td>
+                                    <td class="upcoming-dividend-tr">@Model.CleanDate(Model.UpcomingDividends[i].DeclarationDate)</td>
+                                    <td class="upcoming-dividend-tr">@Model.CleanDate(Model.UpcomingDividends[i].RecordDate)</td>
+                                </tr>
+                            }
+                            else if (i == Model.UpcomingDividends.Length - 2)
+                            {
+                                <tr style="border-bottom: 3px solid black">
+                                    <th scope="row">$@Model.UpcomingDividends[i].Dividend</th>
+                                    <td>@Model.CleanDate(Model.UpcomingDividends[i].PaymentDate)</td>
+                                    <td>@Model.CleanDate(Model.UpcomingDividends[i].DeclarationDate)</td>
+                                    <td>@Model.CleanDate(Model.UpcomingDividends[i].RecordDate)</td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr>
+                                    <th scope="row">$@Model.UpcomingDividends[i].Dividend</th>
+                                    <td>@Model.CleanDate(Model.UpcomingDividends[i].PaymentDate)</td>
+                                    <td>@Model.CleanDate(Model.UpcomingDividends[i].DeclarationDate)</td>
+                                    <td>@Model.CleanDate(Model.UpcomingDividends[i].RecordDate)</td>
+                                </tr>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        @foreach (var x in Model.UpcomingDividends)
+                        {
+                            <tr>
+                                <th scope="row" class="upcoming-dividend-tr">$@x.Dividend</th>
+                                <td class="upcoming-dividend-tr">@Model.CleanDate(x.PaymentDate)</td>
+                                <td class="upcoming-dividend-tr">@Model.CleanDate(x.DeclarationDate)</td>
+                                <td class="upcoming-dividend-tr">@Model.CleanDate(x.RecordDate)</td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        }
+
+        // RECENT DIVIDENDS
+        @if (Model.PastDividends == null)
+        {
+            <p>There are no recent dividend payments</p>
+        }
+        else
+        {
+            DateTime oldestDividend = DateTime.Parse(Model.PastDividends[0].PaymentDate);
+
+            foreach (var x in Model.PastDividends)
+            {
+                if (DateTime.Parse(x.PaymentDate) < oldestDividend)
+                {
+                    oldestDividend = DateTime.Parse(x.PaymentDate);
+                }
+            }
+            TimeSpan duration = DateTime.Now - oldestDividend;
+            decimal totalDividendPayments = 0;
+            foreach (var x in Model.PastDividends)
+            {
+                totalDividendPayments += (decimal)x.Dividend;
+            }
+
+            Array.Reverse(Model.PastDividends); // this will show the most recent payments at top of recent dividends table
+            TimeSpan mostRecentPaymentDaysAgo = DateTime.Now - DateTime.Parse(Model.PastDividends[0].PaymentDate);
+
+
+            <b>Recent dividends (@Model.PastDividends.Length)</b>
+            <p>@Model.Name has paid out $@totalDividendPayments in dividends from
+                @DateTime.Parse(Model.PastDividends[Model.PastDividends.Length - 1].PaymentDate).ToString("MMMM yyyy") to
+                @DateTime.Parse(Model.PastDividends[0].PaymentDate).ToString("MMMM yyyy"). During this period, there were
+                @Model.PastDividends.Length payments with an average of $@Model.PastDividends.Select(x => x.Dividend).Average()
+                paid per share. The most recent payment occurred on
+                @DateTime.Parse(Model.PastDividends[0].PaymentDate).ToString("MMMM dd, yyyy")
+                (@Math.Floor(mostRecentPaymentDaysAgo.TotalDays) days ago).
+            </p>
+            <table class="table  table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Paid on</th>
+                        <th scope="col">Declaration Date</th>
+                        <th scope="col">Record Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var x in Model.PastDividends)
+                    {
+
+                        <tr>
+                            <th scope="row">$@x.Dividend</th>
+                            <td>@Model.CleanDate(x.PaymentDate)</td>
+                            <td>@Model.CleanDate(x.DeclarationDate)</td>
+                            <td>@Model.CleanDate(x.RecordDate)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    }
+    // COMPANY DOES NOT PAY DIVIDENDS
+    else
+    {
+        <p><strong>@Model.Name does not pay dividends.</strong></p>
+    }
+
+    @if (Model.Description != null)
+    {
+        <hr class="mt-5">
+        <div style="max-width: 900px;">
+            <h2>About @Model.Name</h2>
+            @for (int i = 0; i < Model.Description.Length; i++)
+            {
+                if (i == 0)
+                {
+                    <p itemprop="description">@Model.Description[i]</p>
+                }
+                <p>@Model.Description[i]</p>
+            }
+
+        </div>
+    }
+
+    @if (Model.RelatedStocks != null)
+    {
+        <hr>
+        <div>
+            <p class="mb-0">Other companies in the @Model.Exchange exhcnage you might be interested in:</p>
+            @foreach (var x in Model.RelatedStocks)
+            {
+                <a class="related-stock-link" href="@x.CompanySymbol.ToLower()">@x.CompanyName</a>
+            }
+        </div>
+    }
+</div>
