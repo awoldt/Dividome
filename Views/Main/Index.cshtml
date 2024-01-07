@@ -4,57 +4,78 @@
     ViewBag.description = "Unlock dividend insights for public companies. Get key data on payout dates, amounts, and financial performance. Empower your investment decisions with our user-friendly platform.";
 }
 
-@if (DateTime.Now.Month == 1)
-{
-    <div class="alert alert-info"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-            fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+<div style="margin-top: 28%;">
+<h1>
+    Discover Dividend Data
+    <br>
+    for Publicly Traded Companies.
+</h1>
+
+@if(Model.LastYearDividends != null && Model.ThisYearDividends != null) {
+    <div>
+        <p style="font-size: x-large;">
+            More than <b>@Model.LastYearDividends.NumOfDividends dividends</b> paid out to investors in <b>@Model.LastYearDividends.Year</b>.
+            <br>
+            This year there are <b>@Model.ThisYearDividends.NumOfDividends dividends</b> scheduled to be paid out across <b>@Model.NumOfCompaniesPayingDivThisYear companies</b>.
+        </p>
+    </div>
+}
+
+<div style="margin-top: 16rem;">
+    <p style="font-size: x-large;">
+        Start Scrolling to Explore <b>Today's Dividends</b> and <b>Trending Stocks</b>.
+    </p>
+</div>
+
+<div style="margin-top: 8rem;">
+    <h2>Today's Dividends</h2>
+</div>
+
+
+@if(Model.TodaysDividends != null) {    
+    <p>There are <b>@Model.TodaysDividends.Length</b> Dividends being paid out today.</p>
+}
+else {
+    @if (DateTime.Now.Month == 1)
+    {
+    <div style="display: flex; align-items: center; background: #5887FF; color: white; padding: 1rem; margin-top: .4rem; margin-bottom: .4rem">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16" style="margin-right: .4rem">
             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
             <path
                 d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
         </svg>
-        Since it's the beginning of the new year, dividend data may be delayed or incomplete
+        <p style="color: white !important; font-weight: 600 !important;">
+            Dividend data may be delayed or incomplete due to the start of the year.
+        </p>
     </div>
-}
-
-<h1>Discover Dividend Data for any Publicly Traded Company</h1>
-<p>Here at Dividome, we focus on only one thing: dividends. Most other stock websites have cluttered pages filled with ads, irrelevant information, and trackers, to name a few. Viewing dividend data for all your favorite companies should be easy and not a hassle.</p>
-
-@if(Model.LastYearDividends != null && Model.ThisYearDividends != null) {
-    <p><b>There were over @Model.LastYearDividends.NumOfDividends dividends paid out to investors in @Model.LastYearDividends.Year</b></p>
-    <p><b>This year there are @Model.ThisYearDividends.NumOfDividends dividends scheduled to be paid out across @Model.NumOfCompaniesPayingDivThisYear companies</b></p>
-}
-
-<div class="mt-5">
-<i class="bi bi-calendar-week-fill" style="font-size: 30px;"></i>
-<h2 style="display: inline;">Today's Dividends</h2>
-@if(Model.TodaysDividends != null) {    
-    <p>There are <b>@Model.TodaysDividends.Length</b> dividends being paid out today!</p>
-}
-else {
-    <p>There are no dividends being paid out today :(</p>
+    }
 }
 
 
 
 @if(Model.PopularStocks.Count > 0) {
     TimeSpan days = DateTime.Parse(Model.PopularStocks[0].PaymentDate) - DateTime.Now;
-    <i class="bi bi-fire" style="font-size: 30px;"></i> <h2 style="display: inline;">Featuring the Hottest Stocks</h2>
-    <p class="mt-2">@Model.PopularStocks[0].CompanyProfile.CompanyName has a $@Model.PopularStocks[0].Dividend dividend being paid out in @Math.Ceiling(days.TotalDays) days</p>
+    <div style="display: flex; align-items: center; margin-top: 4rem;">
+        <h2>Trending Stocks</h2>
+    </div>
+    <p><b>@Model.PopularStocks[0].CompanyProfile.CompanyName</b> has a <b>$@Model.PopularStocks[0].Dividend</b> dividend being paid out in @Math.Ceiling(days.TotalDays) days.</p>
 
-    <table class="table table-striped">
+    <table class="table table-hover table-bordered" style="margin-top: 1rem;">
         <thead>
             <tr>
             <th scope="col">Company</th>
             <th scope="col">Amount</th>
             <th scope="col">Payment Date</th>
-            <th scope="col">Payment in Days</th>
+            <th scope="col">Remaining Days</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody style="cursor: pointer; background: black !important;">
             @foreach(DivData x in Model.PopularStocks) {
                 TimeSpan paidIn = DateTime.Parse(x.PaymentDate) - DateTime.Now;
-                <tr>
-                    <th scope="row"><a href="/@x.CompanyProfile.CompanySymbol.ToLower()">@x.CompanyProfile.CompanyName</a></th>
+                <tr style="cursor: pointer; background: black !important;">
+
+                    <td><a href="/@x.CompanyProfile.CompanySymbol.ToLower()"><img src="https://491292639630-dividome.s3.amazonaws.com/imgs/@($"{x.CompanyProfile.CompanySymbol}.png")" alt="company-logo" style="height: 20px; width: 40px; object-fit: contain;"/>@x.CompanyProfile.CompanyName</a></td>
                     <td>$@x.Dividend</td>
                     <td>@x.PaymentDate</td>
                     <td>@Math.Ceiling(paidIn.TotalDays)</td>
@@ -63,6 +84,4 @@ else {
         </tbody>
     </table>  
 }
-
 </div>
-
