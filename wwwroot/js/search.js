@@ -15,13 +15,14 @@ async function Search() {
     const res = await req.json();
     if (res.valid) {
       window.location.assign(`/${searchInput.value}`);
+    } else {
+      alert(`There is no ticker for ${searchInput.value}`);
     }
   } catch (err) {
     alert(err);
   }
 }
 
-// Add an event listener to the input element
 searchInput.addEventListener("keyup", async function (event) {
   if (event.key === "Enter") {
     await Search();
