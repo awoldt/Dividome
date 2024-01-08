@@ -6,37 +6,29 @@ body {
   background-color: #F9F6F0 !important;
 }
 
+#content {
+  width: 100%;
+}
+
+.content-holder {
+  margin-top: 35%;
+}
+
 #nav-left,
 #nav-right {
   position: relative !important;
   background: none !important;
   margin-top: 1rem;
+  margin-left: 1rem !important;
+  padding: 0 !important;
+}
+
+#nav-right {
+  margin-left: 1rem !important;
 }
 
 #content {
-  width: 90%;
-}
-
-@media (min-width: 1499px) {
-  #content {
-    width: 60%;
-  }
-
-  #nav-left {
-    position: fixed !important;
-    top: 0px !important;
-    left: 0px !important;
-    margin-left: 4rem !important;
-    margin-top: 1rem !important
-  }
-
-  #nav-right {
-    position: fixed !important;
-    top: 0px !important;
-    right: 0px !important;
-    margin-right: 4rem;
-    margin-top: 2rem;
-  }
+  width: 100%;
 }
 
 .search {
@@ -46,6 +38,7 @@ body {
   font-weight: 500;
   font-family: inter;
   color: #3a2f2f;
+  width: 12rem;
 }
 
 .search:focus {
@@ -66,20 +59,23 @@ h6 {
 }
 
 h1 {
-  font-size: 64px !important;
+  font-size: 36px !important;
   font-weight: 900 !important;
 }
 
 h2,
 .logo {
-  font-size: xx-large !important;
+  font-size: x-large !important;
   margin: 0 !important;
   padding: 0 !important;
   line-height: 1.6 !important;
+  font-family: inter;
+  font-weight: 900 !important;
+  color: #3a2f2f !important;
 }
 
 h3 {
-  font-size: medium !important;
+  font-size: large !important;
   margin: 0 !important;
   padding: 0 !important;
   line-height: 1.6 !important;
@@ -90,7 +86,7 @@ p,
 ::placeholder {
   font-family: "Inter";
   font-weight: 400 !important;
-  font-size: 18px;
+  font-size: 16px;
   margin: 0 !important;
   padding: 0 !important;
   color: #3a2f2f !important
@@ -145,7 +141,7 @@ nav a {
 
 th {
   font-family: "Inter" !important;
-  font-weight: 800 !important;
+  font-weight: 600 !important;
   color: #3a2f2f !important
 }
 
@@ -153,7 +149,7 @@ tr,
 td {
   font-family: "Inter" !important;
   font-weight: 400 !important;
-  font-size: 16px;
+  font-size: 14px;
   color: #3a2f2f !important;
   transition: 150ms linear;
 }
@@ -167,7 +163,65 @@ hr {
   color: #dee2e6 !important;
 }
 
-/* td:hover a{
-  color: #5887FF !important;
-  transition: 150ms linear;
-} */
+@media (min-width: 699px) {
+  #content {
+    width: 90%;
+  }
+
+  .content-holder {
+    margin-top: 25%;
+  }
+}
+
+@media (min-width: 999px) {
+  h1 {
+    font-size: 48px !important;
+  }
+
+  h2 {
+    font-size: xx-large !important;
+  }
+
+  h3 {
+    font-size: x-large !important;
+  }
+
+  p {
+    font-size: 18px;
+  }
+
+  tr,
+  td {
+    font-size: 16px !important;
+  }
+}
+
+@media (min-width: 1499px) {
+  #content {
+    width: 60%;
+  }
+
+  .content-holder {
+    margin-top: 28%;
+  }
+
+  #nav-left {
+    position: fixed !important;
+    top: 0px !important;
+    left: 0px !important;
+    margin-left: 4rem !important;
+    margin-top: 2rem !important;
+  }
+
+  #nav-right {
+    position: fixed !important;
+    top: 0px !important;
+    right: 0px !important;
+    margin-right: 4rem !important;
+    margin-top: 2rem !important
+  }
+
+  .search {
+    width: 14rem;
+  }
+}

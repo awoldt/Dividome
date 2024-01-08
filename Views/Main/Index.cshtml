@@ -4,7 +4,7 @@
     ViewBag.description = "Unlock dividend insights for public companies. Get key data on payout dates, amounts, and financial performance. Empower your investment decisions with our user-friendly platform.";
 }
 
-<div style="margin-top: 28%;">
+<div class="content-holder">
 <h1>
     Discover Dividend Data
     <br>
@@ -13,11 +13,11 @@
 
 @if(Model.LastYearDividends != null && Model.ThisYearDividends != null) {
     <div>
-        <p style="font-size: x-large;">
+        <h3>
             More than <b>@Model.LastYearDividends.NumOfDividends dividends</b> paid out to investors in <b>@Model.LastYearDividends.Year</b>.
             <br>
             This year there are <b>@Model.ThisYearDividends.NumOfDividends dividends</b> scheduled to be paid out across <b>@Model.NumOfCompaniesPayingDivThisYear companies</b>.
-        </p>
+        </h3>
     </div>
 }
 
@@ -39,13 +39,13 @@ else {
     @if (DateTime.Now.Month == 1)
     {
     <div style="display: flex; align-items: center; background: #5887FF; color: white; padding: 1rem; margin-top: .4rem; margin-bottom: .4rem">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-            fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16" style="margin-right: .4rem">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
+            fill="currentColor" viewBox="0 0 16 16" style="margin-right: .4rem">
             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
             <path
                 d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
         </svg>
-        <p style="color: white !important; font-weight: 600 !important;">
+        <p style="color: white !important; font-weight: 500 !important;">
             Dividend data may be delayed or incomplete due to the start of the year.
         </p>
     </div>
@@ -56,12 +56,12 @@ else {
 
 @if(Model.PopularStocks.Count > 0) {
     TimeSpan days = DateTime.Parse(Model.PopularStocks[0].PaymentDate) - DateTime.Now;
-    <div style="display: flex; align-items: center; margin-top: 4rem;">
+    <div style="display: flex; align-items: center; margin-top: 6rem;">
         <h2>Trending Stocks</h2>
     </div>
     <p><b>@Model.PopularStocks[0].CompanyProfile.CompanyName</b> has a <b>$@Model.PopularStocks[0].Dividend</b> dividend being paid out in @Math.Ceiling(days.TotalDays) days.</p>
 
-    <table class="table table-hover table-bordered" style="margin-top: 1rem;">
+    <table class="table table-hover table-bordered" style="margin-top: 1rem; width: 100%">
         <thead>
             <tr>
             <th scope="col">Company</th>
@@ -78,7 +78,7 @@ else {
                     <td><a href="/@x.CompanyProfile.CompanySymbol.ToLower()"><img src="https://491292639630-dividome.s3.amazonaws.com/imgs/@($"{x.CompanyProfile.CompanySymbol}.png")" alt="company-logo" style="height: 20px; width: 40px; object-fit: contain;"/>@x.CompanyProfile.CompanyName</a></td>
                     <td>$@x.Dividend</td>
                     <td>@x.PaymentDate</td>
-                    <td>@Math.Ceiling(paidIn.TotalDays)</td>
+                    <td style="width: fit-content !important;">@Math.Ceiling(paidIn.TotalDays)</td>
                 </tr>
             }
         </tbody>
