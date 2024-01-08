@@ -28,7 +28,7 @@ public class MainController : Controller
             using (var db = new Db(_config))
             {
                 var nLastYear = await db.Dividends.Where(x => x.PaymentDate.Substring(0, 4) == (DateTime.Now.Year - 1).ToString()).ToArrayAsync();
-                var nThisYear = await db.Dividends.Where(x => x.PaymentDate.Substring(0, 4) == DateTime.Now.Year.ToString()).ToArrayAsync();
+                var nThisYear = await db.Dividends.Where(x => x.PaymentDate.Substring(0, 4) == DateTime.Now.Year.ToString()).Include(x => x.CompanyProfile).ToArrayAsync();
                 var popularStocksData = await db.Dividends.Where(d => hotStocks.Contains(d.Symbol)).Include(x => x.CompanyProfile).ToArrayAsync();
 
                 List<DivData> popularStocksDisplayed = new List<DivData>();
@@ -81,6 +81,30 @@ public class MainController : Controller
             _logger.LogError(ex.ToString());
             return View("Error");
         }
+    }
+
+    [HttpGet]
+    [Route("/todaysdividends")]
+    public async Task<IActionResult> TodaysDividends()
+    {
+        try
+        {
+            using (var db = new Db(_config))
+            {
+                string today = DateTime.Now.ToString("yyyy-MM-dd");
+                string tomorrow = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd");
+
+                var todaysDividends = await db.Dividends.Where(x => x.PaymentDate == today).Include(x => x.CompanyProfile).ToArrayAsync();
+                int numOfDividendsTomorrow = (await db.Dividends.Where(x => x.PaymentDate == tomorrow).ToArrayAsync()).Length;
+                return View(new TodaysDividendsModel(todaysDividends, numOfDividendsTomorrow));
+            }
+        }
+        catch (Exception err)
+        {
+            _logger.LogError(err.ToString());
+            return View("Error");
+        }
+
     }
 
     [HttpPost]

@@ -225,3 +225,7 @@ hr {
     width: 14rem;
   }
 }
+
+.company-description-ptag {
+  margin-bottom: 15px !important;
+}

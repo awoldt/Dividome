@@ -1,3 +1,5 @@
+using System.Collections;
+
 public class IndexPageModel
 {
     public IndexPageModel(DivData[]? lastYear, DivData[]? thisYear, List<DivData> popularStocks)
@@ -14,8 +16,14 @@ public class IndexPageModel
         if (thisYear != null)
         {
             var todaysDividends = thisYear.Where(x => DateTime.Parse(x.PaymentDate) == new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day)).ToArray();
-            if (todaysDividends.Length > 1)
+            if (todaysDividends != null && todaysDividends.Length > 0)
             {
+                NumOfDividendsToday = todaysDividends.Length;
+                todaysDividends = todaysDividends.OrderBy(x => x.CompanyProfile.CompanyName).ToArray();
+                if (todaysDividends.Length > 8)
+                {
+                    todaysDividends = todaysDividends.Skip(0).Take(8).ToArray();
+                }
                 TodaysDividends = todaysDividends;
             }
         }
@@ -26,6 +34,7 @@ public class IndexPageModel
     public YearStat? ThisYearDividends { get; set; }
     public List<DivData> PopularStocks { get; set; } = new List<DivData>();
     public int? NumOfCompaniesPayingDivThisYear { get; set; }
+    public int? NumOfDividendsToday { get; set; }
     public DivData[]? TodaysDividends { get; set; }
 }
 

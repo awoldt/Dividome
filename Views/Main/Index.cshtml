@@ -10,11 +10,12 @@
     <br>
     for Publicly Traded Companies.
 </h1>
+<p class="text-muted mb-4">Including companies from the NASDAQ, NYSE, AMEX, ASE, and CBOE</p>
 
 @if(Model.LastYearDividends != null && Model.ThisYearDividends != null) {
     <div>
         <h3>
-            More than <b>@Model.LastYearDividends.NumOfDividends dividends</b> paid out to investors in <b>@Model.LastYearDividends.Year</b>.
+            More than <b>@Model.LastYearDividends.NumOfDividends dividends</b> were paid out to investors in <b>@Model.LastYearDividends.Year</b>.
             <br>
             This year there are <b>@Model.ThisYearDividends.NumOfDividends dividends</b> scheduled to be paid out across <b>@Model.NumOfCompaniesPayingDivThisYear companies</b>.
         </h3>
@@ -33,7 +34,26 @@
 
 
 @if(Model.TodaysDividends != null) {    
-    <p>There are <b>@Model.TodaysDividends.Length</b> Dividends being paid out today.</p>
+    <p>There are <b>@Model.NumOfDividendsToday</b> Dividends being paid out today.</p>
+
+    <table class="table table-hover table-bordered" style="margin-top: 1rem; width: 100%">
+        <thead>
+            <tr>
+            <th scope="col">Company</th>
+            <th scope="col">Amount</th>
+           
+            </tr>
+        </thead>
+        <tbody style="cursor: pointer; background: black !important;">
+            @foreach(DivData x in Model.TodaysDividends) {
+                <tr style="cursor: pointer; background: black !important;">
+                    <td><a href="/@x.CompanyProfile.CompanySymbol.ToLower()"><img src="https://491292639630-dividome.s3.amazonaws.com/imgs/@($"{x.CompanyProfile.CompanySymbol}.png")" alt="company-logo" style="height: 20px; width: 40px; object-fit: contain;"/>@x.CompanyProfile.CompanyName</a></td>
+                    <td>$@x.Dividend</td>
+                </tr>
+            }
+        </tbody>
+    </table> 
+    <a style="color: #0070E0 !important" href="/todaysdividends">View all of today's dividends</a>
 }
 else {
     @if (DateTime.Now.Month == 1)

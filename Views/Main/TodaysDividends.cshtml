@@ -1,0 +1,49 @@
+@model TodaysDividendsModel
+
+@{
+    string todaysDate = DateTime.Now.ToString("dddd, MMMM d");
+
+    ViewBag.title = "Dividends Being Paid out Today";
+    ViewBag.description = "Discover all the dividends being paid out to investors today";
+    ViewBag.canonical = "https://dividome.com/todaysdividends";
+}
+
+<h1 style="margin-top: 150px;">Dividends Being Paid Out Today</h1>
+<span style="font-size: 25px; display: block" class="text-muted mb-4">@todaysDate</span>
+
+@if (Model.TodaysDividends != null)
+{
+    <p>There are <b>@Model.NumOfDividendsToday</b> dividends being paid out to investors today</p>
+    <p><b>@Model.HighestPayingDividend.CompanyProfile.CompanyName</b> has the highest paying dividend for today with a
+        payout of <b>$@Model.HighestPayingDividend.Dividend</b> per share</p>
+    if (Model.NumOfDividendsTomorrow > 0)
+    {
+        <p>There is set to be <b>@Model.NumOfDividendsTomorrow</b> dividends being paid out tomorrow</p>
+    }
+
+    <table class="table table-hover table-bordered" style="margin-top: 1rem; width: 100%">
+        <thead>
+            <tr>
+                <th scope="col">Company</th>
+                <th scope="col">Amount</th>
+
+            </tr>
+        </thead>
+        <tbody style="cursor: pointer; background: black !important;">
+            @foreach (DivData x in Model.TodaysDividends)
+            {
+                <tr style="cursor: pointer; background: black !important;">
+                    <td><a href="/@x.CompanyProfile.CompanySymbol.ToLower()"><img
+                                src="https://491292639630-dividome.s3.amazonaws.com/imgs/@($"{x.CompanyProfile.CompanySymbol}.png")"
+                                alt="@x.CompanyProfile.CompanyName logo"
+                                style="height: 20px; width: 40px; object-fit: contain;" />@x.CompanyProfile.CompanyName</a></td>
+                    <td>$@x.Dividend</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p><strong>There are no dividends being paid out today</strong></p>
+}

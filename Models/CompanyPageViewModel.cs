@@ -44,7 +44,7 @@ public class CompanyPage
         List<DivData> upcomingPayments = new List<DivData>();
         List<DivData> recentPayments = new List<DivData>();
 
-        var currentDate = DateTime.Now;
+        var currentDate = DateTime.Now.Date;
         foreach (var x in data)
         {
             try
