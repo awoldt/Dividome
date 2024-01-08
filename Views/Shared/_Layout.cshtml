@@ -48,7 +48,8 @@
                 style="font-family: inter; font-weight: 900 !important; color: #3a2f2f !important; margin-left: 1rem !important; margin-right: 1rem !important">DiviDome</a>
         </nav>
         <nav class="navbar" id="nav-right">
-            <input class="search" type="text" placeholder="Ticker">
+            <input class="search" type="search" placeholder="Ticker" id="search_input">
+            <script src="/js/search.js"></script>
             </input </nav>
     </header>
     <div class="container-fluid" id="content">
@@ -56,7 +57,6 @@
             @RenderBody()
         </main>
     </div>
-    @await RenderSectionAsync("Scripts", required: false)
 </body>
 
 </html>

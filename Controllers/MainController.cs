@@ -83,8 +83,43 @@ public class MainController : Controller
         }
     }
 
+    [HttpPost]
+    [Route("/api/search")]
+    public async Task<IActionResult> SearchQuery([FromBody] SearchQuery q)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(q.Ticker))
+            {
+                return new JsonResult(new { valid = false });
+            }
+
+            // see if ticker exists in database
+            using (var db = new Db(_config))
+            {
+                var stock = await db.Companies.FirstOrDefaultAsync(x => x.CompanySymbol == q.Ticker.ToUpper());
+                if (stock == null)
+                {
+                    return new JsonResult(new { valid = false });
+                }
+                return new JsonResult(new { valid = true });
+            }
+        }
+        catch (Exception err)
+        {
+            return new JsonResult(new { valid = false });
+        }
+
+    }
+
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
+
+public class SearchQuery
+{
+    public string Ticker { get; set; }
+}
+
