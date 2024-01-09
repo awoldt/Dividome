@@ -256,9 +256,10 @@ else
                 {
                     <p itemprop="description" class="company-description-ptag">@Model.Description[i]</p>
                 }
-                <p class="company-description-ptag">@Model.Description[i]</p>
+                else {
+                    <p class="company-description-ptag">@Model.Description[i]</p>
+                }
             }
-
         </div>
     }
 
