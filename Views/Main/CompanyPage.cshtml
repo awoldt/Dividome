@@ -16,17 +16,17 @@
     // DIVIDEND BEING PAID OUT TODAY
     // SHOW BANNER AT TOP OF SCREEN
     <div
-        style="display: flex; align-items: center; background: #5887FF; color: white; padding: 1rem; margin-bottom: 2rem; margin-top: 2rem">
-        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" viewBox="0 0 16 16"
-            style="margin-right: .4rem">
-            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-            <path
-                d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-        </svg>
-        <p style="color: white !important; font-weight: 500 !important;">
-           🎉 @Model.Name has a dividend today of $@Model.TodaysDividend.Dividend per share!
-        </p>
-    </div>
+    style="display: flex; align-items: center; background: #5887FF; color: white; padding: 1rem; margin-bottom: 2rem; margin-top: 2rem">
+    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" viewBox="0 0 16 16"
+        style="margin-right: .4rem">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+        <path
+            d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+    </svg>
+    <p style="color: white !important; font-weight: 500 !important;">
+        🎉 @Model.Name has a dividend today of $@Model.TodaysDividend.Dividend per share!
+    </p>
+</div>
 }
 else
 {
@@ -45,18 +45,18 @@ else
         }
         TimeSpan nextDividendInDays = DateTime.Parse(nextDividend.PaymentDate) - DateTime.Now;
         <div
-            style="display: flex; align-items: center; background: #5887FF; color: white; padding: 1rem; margin-bottom: 2rem; margin-top: 2rem">
-            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" viewBox="0 0 16 16"
-                style="margin-right: .4rem">
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                <path
-                    d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-            </svg>
-            <p style="color: white !important; font-weight: 500 !important;">
-                The next dividend from @Model.Name is scheduled for @Model.CleanDate(nextDividend.PaymentDate).
-                A payout of $@nextDividend.Dividend per share, occurring in @Math.Floor(nextDividendInDays.TotalDays) days.
-            </p>
-        </div>
+    style="display: flex; align-items: center; background: #5887FF; color: white; padding: 1rem; margin-bottom: 2rem; margin-top: 2rem">
+    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" viewBox="0 0 16 16"
+        style="margin-right: .4rem">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+        <path
+            d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+    </svg>
+    <p style="color: white !important; font-weight: 500 !important;">
+        The next dividend from @Model.Name is scheduled for @Model.CleanDate(nextDividend.PaymentDate).
+        A payout of $@nextDividend.Dividend per share, occurring in @Math.Floor(nextDividendInDays.TotalDays) days.
+    </p>
+</div>
     }
 
     if (Model.UpcomingDividends == null && Model.HasDividends)
@@ -64,18 +64,18 @@ else
         // COMPANY HAS NO UPCOMING DIVIDENDS (BUT DOES PAY DIVIDENDS)
         // SHOW BANNER AT TOP OF SCREEN
         <div
-            style="display: flex; align-items: center; background: #5887FF; color: white; padding: 1rem; margin-bottom: 2rem; margin-top: 4rem">
-            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" viewBox="0 0 16 16"
-                style="margin-right: .4rem">
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                <path
-                    d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-            </svg>
-            <p style="color: white !important; font-weight: 500 !important;">
-                @Model.Name does not have any upcoming dividends.<br>Revisit at a later time to check for any newly announced
-                dividend payments.
-            </p>
-        </div>
+    style="display: flex; align-items: center; background: #5887FF; color: white; padding: 1rem; margin-bottom: 2rem; margin-top: 4rem">
+    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" viewBox="0 0 16 16"
+        style="margin-right: .4rem">
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+        <path
+            d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+    </svg>
+    <p style="color: white !important; font-weight: 500 !important;">
+        @Model.Name does not have any upcoming dividends.<br>Revisit at a later time to check for any newly announced
+        dividend payments.
+    </p>
+</div>
     }
 }
 
@@ -200,15 +200,16 @@ else
 
             <h2>
                 Recent Dividends
-                @* (@Model.PastDividends.Length) *@
             </h2>
+
             <p style="margin-bottom: .8rem !important;">
                 <b>@Model.Name</b> has paid out $@totalDividendPayments in dividends from
                 @DateTime.Parse(Model.PastDividends[Model.PastDividends.Length - 1].PaymentDate).ToString("MMMM yyyy") to
                 @DateTime.Parse(Model.PastDividends[0].PaymentDate).ToString("MMMM yyyy").
                 <br>
                 During this period, there were
-                @Model.PastDividends.Length payments with an average of $@Model.PastDividends.Select(x => x.Dividend).Average()
+                @Model.PastDividends.Length payments with an average of $@Model.PastDividends.Select(x =>
+        x.Dividend).Average()?.ToString("F2")
                 paid per share.
                 <br>
                 The most recent payment occurred on
@@ -256,7 +257,8 @@ else
                 {
                     <p itemprop="description" class="company-description-ptag">@Model.Description[i]</p>
                 }
-                else {
+                else
+                {
                     <p class="company-description-ptag">@Model.Description[i]</p>
                 }
             }

@@ -32,7 +32,7 @@
         <tbody style="cursor: pointer; background: black !important;">
             @foreach (DivData x in Model.TodaysDividends)
             {
-                <tr style="cursor: pointer; background: black !important;">
+                <tr style="cursor: pointer; background: black !important;" onclick="window.location.assign('/' + '@x.CompanyProfile.CompanySymbol.ToLower()')">
                     <td><a href="/@x.CompanyProfile.CompanySymbol.ToLower()"><img
                                 src="https://491292639630-dividome.s3.amazonaws.com/imgs/@($"{x.CompanyProfile.CompanySymbol}.png")"
                                 alt="@x.CompanyProfile.CompanyName logo"

@@ -46,7 +46,7 @@
         </thead>
         <tbody style="cursor: pointer; background: black !important;">
             @foreach(DivData x in Model.TodaysDividends) {
-                <tr style="cursor: pointer; background: black !important;">
+                <tr style="cursor: pointer; background: black !important;" onclick="window.location.assign('/' + '@x.CompanyProfile.CompanySymbol.ToLower()')">
                     <td><a href="/@x.CompanyProfile.CompanySymbol.ToLower()"><img src="https://491292639630-dividome.s3.amazonaws.com/imgs/@($"{x.CompanyProfile.CompanySymbol}.png")" alt="company-logo" style="height: 20px; width: 40px; object-fit: contain;"/>@x.CompanyProfile.CompanyName</a></td>
                     <td>$@x.Dividend</td>
                 </tr>
@@ -79,7 +79,13 @@ else {
     <div style="display: flex; align-items: center; margin-top: 6rem;">
         <h2>Trending Stocks</h2>
     </div>
-    <p><b>@Model.PopularStocks[0].CompanyProfile.CompanyName</b> has a <b>$@Model.PopularStocks[0].Dividend</b> dividend being paid out in @Math.Ceiling(days.TotalDays) days.</p>
+    
+    if(@Math.Ceiling(days.TotalDays) == 1) {
+        <p><b>@Model.PopularStocks[0].CompanyProfile.CompanyName</b> has a <b>$@Model.PopularStocks[0].Dividend</b> dividend being paid out tomorrow!</p>
+    }
+    else {
+        <p><b>@Model.PopularStocks[0].CompanyProfile.CompanyName</b> has a <b>$@Model.PopularStocks[0].Dividend</b> dividend being paid out in @Math.Ceiling(days.TotalDays) days.</p>
+    }
 
     <table class="table table-hover table-bordered" style="margin-top: 1rem; width: 100%">
         <thead>
@@ -93,13 +99,13 @@ else {
         <tbody style="cursor: pointer; background: black !important;">
             @foreach(DivData x in Model.PopularStocks) {
                 TimeSpan paidIn = DateTime.Parse(x.PaymentDate) - DateTime.Now;
-                <tr style="cursor: pointer; background: black !important;">
-
+               <tr style="cursor: pointer; background: black !important;" onclick="window.location.assign('/' + '@x.CompanyProfile.CompanySymbol.ToLower()')">
                     <td><a href="/@x.CompanyProfile.CompanySymbol.ToLower()"><img src="https://491292639630-dividome.s3.amazonaws.com/imgs/@($"{x.CompanyProfile.CompanySymbol}.png")" alt="company-logo" style="height: 20px; width: 40px; object-fit: contain;"/>@x.CompanyProfile.CompanyName</a></td>
                     <td>$@x.Dividend</td>
                     <td>@x.PaymentDate</td>
                     <td style="width: fit-content !important;">@Math.Ceiling(paidIn.TotalDays)</td>
                 </tr>
+
             }
         </tbody>
     </table>  
