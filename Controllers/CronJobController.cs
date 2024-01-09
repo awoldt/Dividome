@@ -107,7 +107,7 @@ public class CronJobController : Controller
                 }
             }
 
-            Console.WriteLine($"DIVIDEND DATA RESULTS:\nq1 last year - {q1DividendsLastYear.Length}\nq2 last year - {q2DividendsLastYear.Length}\nq3 last year - {q3DividendsLastYear.Length}\nq4 last year - {q4DividendsLastYear.Length}\nq1 this year - {q1DividendsThisYear.Length}\nq2 this year - {q2DividendsThisYear.Length}\nq3 this year - {q3DividendsThisYear.Length}\nq4 this year - {q4DividendsThisYear.Length}\n");
+            Console.WriteLine($"\nDIVIDEND DATA GENERATION RESULTS:\nq1 last year - {q1DividendsLastYear.Length}\nq2 last year - {q2DividendsLastYear.Length}\nq3 last year - {q3DividendsLastYear.Length}\nq4 last year - {q4DividendsLastYear.Length}\nq1 this year - {q1DividendsThisYear.Length}\nq2 this year - {q2DividendsThisYear.Length}\nq3 this year - {q3DividendsThisYear.Length}\nq4 this year - {q4DividendsThisYear.Length}\n");
 
             ALL_DIVDEND_DATA = q1DividendsLastYear.Concat(q2DividendsLastYear).Concat(q3DividendsLastYear).Concat(q4DividendsLastYear).Concat(q1DividendsThisYear).Concat(q2DividendsThisYear).Concat(q3DividendsThisYear).Concat(q4DividendsThisYear).ToArray();
 
@@ -132,6 +132,7 @@ public class CronJobController : Controller
 
                 // save changes
                 await dbContext.SaveChangesAsync();
+                Console.WriteLine("SUCCESSFULLY UPDATED ALL RECORDS IN DATABASE\nTHERE ARE " + recordsAdded + " NOW STORED");
             }
 
             HttpContext.Response.StatusCode = 200;
