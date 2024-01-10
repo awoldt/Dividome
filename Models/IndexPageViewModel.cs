@@ -2,9 +2,8 @@ using System.Collections;
 
 public class IndexPageModel
 {
-    public IndexPageModel(DivData[]? lastYear, DivData[]? thisYear, List<DivData> popularStocks)
+    public IndexPageModel(DivData[]? thisYear, List<DivData> popularStocks)
     {
-        LastYearDividends = lastYear != null ? new YearStat(DateTime.Now.Year - 1, lastYear.Length - lastYear.Length % 10) : null;
         ThisYearDividends = thisYear != null ? new YearStat(DateTime.Now.Year, thisYear.Length) : null;
         NumOfCompaniesPayingDivThisYear = thisYear != null ? thisYear.GroupBy(s => s.CompanyId).ToArray().Length : null;
 
@@ -30,7 +29,6 @@ public class IndexPageModel
 
     }
 
-    public YearStat? LastYearDividends { get; set; }
     public YearStat? ThisYearDividends { get; set; }
     public List<DivData> PopularStocks { get; set; } = new List<DivData>();
     public int? NumOfCompaniesPayingDivThisYear { get; set; }

@@ -12,13 +12,11 @@
 </h1>
 <p class="text-muted mb-4">Including companies from the NASDAQ, NYSE, AMEX, ASE, and CBOE</p>
 
-@if(Model.LastYearDividends != null && Model.ThisYearDividends != null) {
+@if(Model.ThisYearDividends != null) {
     <div>
-        <h3>
-            More than <b>@Model.LastYearDividends.NumOfDividends dividends</b> were paid out to investors in <b>@Model.LastYearDividends.Year</b>.
-            <br>
+        <p style="font-size: 30px">
             This year there are <b>@Model.ThisYearDividends.NumOfDividends dividends</b> scheduled to be paid out across <b>@Model.NumOfCompaniesPayingDivThisYear companies</b>.
-        </h3>
+        </p>
     </div>
 }
 
@@ -111,3 +109,10 @@ else {
     </table>  
 }
 </div>
+
+<footer>
+            <p class="mb-3">The information provided on this website is for general informational purposes only and should not be
+                considered as financial advice.</p>
+            <p>All company logos displayed are the properties of their respective owners. The use of these logos does
+                not indicate any endorsement, sponsorship, or association with the content on this site.</p>
+        </footer>
