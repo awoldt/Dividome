@@ -1,3 +1,4 @@
+
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,9 +14,12 @@ public class CronJobController : Controller
 {
     private readonly IConfiguration _config;
 
-    public CronJobController(IConfiguration config)
+    private readonly Db _db;
+
+    public CronJobController(IConfiguration config, Db db)
     {
         _config = config;
+        _db = db;
     }
 
     [HttpPost]
@@ -111,32 +115,41 @@ public class CronJobController : Controller
 
             ALL_DIVDEND_DATA = q1DividendsLastYear.Concat(q2DividendsLastYear).Concat(q3DividendsLastYear).Concat(q4DividendsLastYear).Concat(q1DividendsThisYear).Concat(q2DividendsThisYear).Concat(q3DividendsThisYear).Concat(q4DividendsThisYear).ToArray();
 
-            int recordsAdded = 0;
-            using (var dbContext = new Db(new DbContextOptions<Db>()))
+            if (ALL_DIVDEND_DATA != null && ALL_DIVDEND_DATA.Length > 0)
             {
-                // remove all records first
-                var allRecords = await dbContext.Dividends.ToListAsync();
-                dbContext.Dividends.RemoveRange(allRecords);
+                int recordsAdded = 0;
+                List<DivData> validDividendData = new List<DivData>();
 
+                // loop through all dividend data and only add data that is associated with a company stored
                 foreach (var x in ALL_DIVDEND_DATA)
                 {
-                    var companyProfile = dbContext.Companies.FirstOrDefault(c => c.CompanySymbol == x.Symbol);
+                    var companyProfile = _db.Companies.FirstOrDefault(c => c.CompanySymbol == x.Symbol);
                     if (companyProfile != null)
                     {
                         recordsAdded++;
                         x.CompanyProfile = companyProfile;
-                        x.CompanyId = companyProfile.CompanyId;
-                        await dbContext.Dividends.AddAsync(x);
+                        validDividendData.Add(x);
                     }
                 }
 
+                await _db.Dividends.AddRangeAsync(validDividendData);
+
+                // remove all records 
+                var allRecords = await _db.Dividends.ToListAsync();
+                _db.Dividends.RemoveRange(allRecords);
+
+                Console.WriteLine($"Successfully removed {allRecords.Count} dividend records, preparing to add new ones");
+
                 // save changes
-                await dbContext.SaveChangesAsync();
+                await _db.SaveChangesAsync();
                 Console.WriteLine("SUCCESSFULLY UPDATED ALL RECORDS IN DATABASE\nTHERE ARE " + recordsAdded + " NOW STORED");
+
+                HttpContext.Response.StatusCode = 200;
+                return "Successfully updated " + recordsAdded + " records!";
             }
 
             HttpContext.Response.StatusCode = 200;
-            return "Successfully updated " + recordsAdded + " records!";
+            return "ALL_DIVDEND_DATA was either null or had no dividend data to update\ndatabase was not updated.";
         }
         catch (Exception err)
         {
