@@ -1,7 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("aws_postgres_connection_string") ?? throw new InvalidOperationException("Connection string 'IdentityDbConnection' not found.");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<Db>(options =>
+{
+    options.UseNpgsql(connectionString);
+});
 
 var app = builder.Build();
 

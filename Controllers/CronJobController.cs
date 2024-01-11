@@ -112,7 +112,7 @@ public class CronJobController : Controller
             ALL_DIVDEND_DATA = q1DividendsLastYear.Concat(q2DividendsLastYear).Concat(q3DividendsLastYear).Concat(q4DividendsLastYear).Concat(q1DividendsThisYear).Concat(q2DividendsThisYear).Concat(q3DividendsThisYear).Concat(q4DividendsThisYear).ToArray();
 
             int recordsAdded = 0;
-            using (var dbContext = new Db(_config))
+            using (var dbContext = new Db(new DbContextOptions<Db>()))
             {
                 // remove all records first
                 var allRecords = await dbContext.Dividends.ToListAsync();

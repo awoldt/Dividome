@@ -5,19 +5,14 @@ using Microsoft.EntityFrameworkCore;
 
 public class Db : DbContext
 {
-    private readonly IConfiguration _configuration;
-
-    public Db(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
 
     public DbSet<CompanyProfile> Companies { get; set; }
     public DbSet<DivData> Dividends { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public Db(DbContextOptions<Db> options)
+        : base(options)
     {
-        optionsBuilder.UseNpgsql(_configuration["db_connection_string"]);
+
     }
 }
 
