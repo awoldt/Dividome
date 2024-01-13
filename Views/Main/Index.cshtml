@@ -29,6 +29,7 @@
 <div style="margin-top: 8rem;">
     <h2>Today's Dividends</h2>
 </div>
+<p class="text-muted mb-5">@DateTime.Now.ToString("dddd, MMMM d")</p>
 
 
 @if(Model.TodaysDividends != null) {    
@@ -54,8 +55,6 @@
     <a style="color: #0070E0 !important" href="/todaysdividends">View all of today's dividends</a>
 }
 else {
-    @if (DateTime.Now.Month == 1)
-    {
     <div style="display: flex; align-items: center; background: #5887FF; color: white; padding: 1rem; margin-top: .4rem; margin-bottom: .4rem">
         <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36"
             fill="currentColor" viewBox="0 0 16 16" style="margin-right: .4rem">
@@ -64,10 +63,10 @@ else {
                 d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
         </svg>
         <p style="color: white !important; font-weight: 500 !important;">
-            Dividend data may be delayed or incomplete due to the start of the year.
+            There are no dividends being paid out today 
         </p>
     </div>
-    }
+    
 }
 
 
