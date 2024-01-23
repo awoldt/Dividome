@@ -46,7 +46,7 @@
         <tbody style="cursor: pointer; background: black !important;">
             @foreach(DivData x in Model.TodaysDividends) {
                 <tr style="cursor: pointer; background: black !important;" onclick="window.location.assign('/' + '@x.CompanyProfile.CompanySymbol.ToLower()')">
-                    <td><a href="/@x.CompanyProfile.CompanySymbol.ToLower()"><img src="https://491292639630-dividome.s3.amazonaws.com/imgs/@($"{x.CompanyProfile.CompanySymbol}.png")" alt="company-logo" style="height: 20px; width: 40px; object-fit: contain;"/>@x.CompanyProfile.CompanyName</a></td>
+                    <td><a href="/@x.CompanyProfile.CompanySymbol.ToLower()"><img src="https://491292639630-dividome.s3.amazonaws.com/imgs/@($"{x.CompanyProfile.CompanySymbol}.png")" alt="company-logo" style="height: 25px; width: 25px; object-fit: cover; margin-right: 0.4rem"/>@x.CompanyProfile.CompanyName</a></td>
                     <td>$@x.Dividend</td>
                 </tr>
             }
@@ -97,7 +97,7 @@ else {
             @foreach(DivData x in Model.PopularStocks) {
                 TimeSpan paidIn = DateTime.Parse(x.PaymentDate) - DateTime.Now;
                <tr style="cursor: pointer; background: black !important;" onclick="window.location.assign('/' + '@x.CompanyProfile.CompanySymbol.ToLower()')">
-                    <td><a href="/@x.CompanyProfile.CompanySymbol.ToLower()"><img src="https://491292639630-dividome.s3.amazonaws.com/imgs/@($"{x.CompanyProfile.CompanySymbol}.png")" alt="company-logo" style="height: 20px; width: 40px; object-fit: contain;"/>@x.CompanyProfile.CompanyName</a></td>
+                    <td><a href="/@x.CompanyProfile.CompanySymbol.ToLower()"><img src="https://491292639630-dividome.s3.amazonaws.com/imgs/@($"{x.CompanyProfile.CompanySymbol}.png")" alt="company-logo" style="height: 25px; width: 25px; object-fit: cover; margin-right: 0.4rem"/>@x.CompanyProfile.CompanyName</a></td>
                     <td>$@x.Dividend</td>
                     <td>@x.PaymentDate</td>
                     <td style="width: fit-content !important;">@Math.Ceiling(paidIn.TotalDays)</td>
@@ -111,7 +111,6 @@ else {
 
 <footer>
             <p class="mb-3">The information provided on this website is for general informational purposes only and should not be
-                considered as financial advice.</p>
-            <p>All company logos displayed are the properties of their respective owners. The use of these logos does
+                considered as financial advice. All company logos displayed are the properties of their respective owners. The use of these logos does
                 not indicate any endorsement, sponsorship, or association with the content on this site.</p>
         </footer>
